@@ -1,0 +1,4 @@
+Jika terjadi error harus cari datanya terlebih dahulu, apakah datanya sudah masuk atau belum, data nya sesuai apa belum
+
+1. Yang aku ulik itu gmana cara manggil middleware nya
+2. Kalau misalkan sudah bisa manggil middlewarenya maka, melakukan pengecekan Apakah datanya sudah masuk di middelware nya apa belum?

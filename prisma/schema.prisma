@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model education {
+  id            Int      @id @default(autoincrement())
+  major         String   @db.VarChar(100)
+  school        String   @db.VarChar(100)
+  date_graduate DateTime @db.Date
+}
+
+model my_tech_stack {
+  id                  Int                  @id @default(autoincrement())
+  name_tech           String               @db.VarChar(100)
+  image_tech          String               @db.VarChar(255)
+  my_tech_stack_image my_tech_stack_image?
+  projects            projects[]
+}
+
+model profiles {
+  id             Int             @id @default(autoincrement())
+  fullname       String?         @db.VarChar(100)
+  image          String?         @db.VarChar(255)
+  unduh_resume   String          @db.VarChar(100)
+  about_me       String?         @db.Text
+  email          String?         @db.VarChar(100)
+  profiles_image profiles_image?
+}
+
+model projects {
+  id               Int             @id @default(autoincrement())
+  title            String          @db.VarChar(100)
+  information      String          @db.Text
+  image_project    String          @db.VarChar(255)
+  my_tect_stack_id Int
+  my_tech_stack    my_tech_stack   @relation(fields: [my_tect_stack_id], references: [id], onUpdate: Restrict, map: "tech_stack_id_fk")
+  projects_image   projects_image?
+
+  @@index([my_tect_stack_id], map: "tech_stack_id_fk")
+}
+
+model identity {
+  id        Int    @id @default(autoincrement())
+  your_name String @db.VarChar(100)
+  image_ktp String @db.VarChar(255)
+  image_sim String @db.VarChar(255)
+}
+
+model sample {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(100)
+  city     String @db.VarChar(100)
+}
+
+model work_experience {
+  id              Int                          @id @default(autoincrement())
+  position        String                       @db.VarChar(100)
+  skill           String                       @db.VarChar(100)
+  workplace       String                       @db.VarChar(100)
+  type_of_work    work_experience_type_of_work
+  date_experience DateTime                     @db.Date
+}
+
+model my_tech_stack_image {
+  id               Int           @id @default(autoincrement())
+  my_tech_stack_id Int           @unique(map: "my_tech_stack_id")
+  image_tech       String        @db.VarChar(255)
+  my_tech_stack    my_tech_stack @relation(fields: [my_tech_stack_id], references: [id], onUpdate: Restrict, map: "my_tech_stack_image_id")
+
+  @@index([my_tech_stack_id], map: "my_tech_stack_id_2")
+}
+
+model profiles_image {
+  id          Int      @id @default(autoincrement())
+  profiles_id Int      @unique(map: "profiles_id")
+  image       String   @db.VarChar(255)
+  profiles    profiles @relation(fields: [profiles_id], references: [id], onUpdate: Restrict, map: "profiles_image_id")
+}
+
+model projects_image {
+  id            Int      @id @default(autoincrement())
+  projects_id   Int      @unique(map: "projects_image")
+  image_project String   @db.VarChar(255)
+  projects      projects @relation(fields: [projects_id], references: [id], onUpdate: Restrict, map: "projects_image_id")
+}
+
+enum work_experience_type_of_work {
+  Santai
+  Internship
+}

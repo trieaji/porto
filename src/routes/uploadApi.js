@@ -1,0 +1,37 @@
+import express from "express"
+import { uploadFile } from "../middleware/uploadFiles.js";
+import { uploadOneFile } from "../middleware/uploadOneFile.js";
+import { createImage } from "../controllers/uploadController.js";
+import { createdbImage } from "../controllers/identityController.js";
+import { createProfile } from "../controllers/profileController.js";
+
+import multer from "multer";
+// const upload = multer({dest: 'uploads/'})
+const upload = multer({dest: 'uploads/'})
+
+const uploadRouter = new express.Router();
+// uploadRouter.use(uploadFile)
+
+const cpUpload =  upload.fields([{ name: 'image_ktp', maxCount: 1 },{ name: 'image_sim', maxCount: 1 }])
+const oneUpload = upload.single('image')
+// const testUpload = uploadFile
+
+uploadRouter.post('/api/upload', cpUpload, createImage) // masukkan uploadFile di sini
+
+uploadRouter.post('/api/identity', cpUpload,createdbImage)
+
+//profiles
+uploadRouter.post('/api/profiles', oneUpload, createProfile)
+
+export {
+    uploadRouter
+}
+
+
+// app.post('/upload', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }]), (req, res) => {
+//     // Access the uploaded file information using req.file
+//     if (!req.files) {
+//       return res.status(400).send('No file uploaded.');
+//     }
+//     res.send('File uploaded successfully.');
+//   });
