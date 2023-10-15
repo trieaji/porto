@@ -1,13 +1,20 @@
-import { dbCreateImage } from "../services/uploadService.js";
+import { upload } from "../services/uploadService.js";
 
-const createImage = async (req,res,next) => {
+const uploadImage = async (req,res,next) => {
     try {
-        // console.log('=== req luur ===')
-        // console.log(req)
+        console.log('=== req luur ===')
+        console.log(req)
         // let img = req.files.image_ktp[0].path
+        // img = req.files.image_sim[0].path
         let img = req.files
-        let request = req.body
-        const result = await dbCreateImage(img,request)
+        let myImage = {
+            image_ktp : img.image_ktp[0].path,
+            image_sim : img.image_sim[0].path
+        }
+        // let request = req.body
+        // request = myImage
+        // request = myImage
+        const result = await upload(myImage)
         res.status(200).json({
             data: result
         })
@@ -18,5 +25,5 @@ const createImage = async (req,res,next) => {
 }
 
 export {
-    createImage
+    uploadImage
 }

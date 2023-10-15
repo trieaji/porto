@@ -44,7 +44,7 @@ let uploadOneFile = async (image) => {
     // return multipleUpload
 
     return (req, res, next) => {
-        multipleUpload(req, res, function(err) {
+        upload(req, res, function(err) {
             if(req.fileValidationError)
             return res.status(400).send(req.fileValidationError)
 

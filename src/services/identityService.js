@@ -3,28 +3,26 @@ import { uploadValidation } from "../validation/uploadValidation.js";
 import { validatedesu } from "../validation/validation.js";
 import { uploadFile } from "../middleware/uploadFiles.js";
 
-const identityService = async (request) => {
-    // let uploadFiles = await uploadFile(img);
-    // console.log('=== uploadFiles luur ===')
-    // console.log(uploadFiles)
-    // let data = await uploadFiles.image_ktp
-    console.log('=== data ===')
-    console.log(request)
-    // const myImage = await validatedesu(uploadValidation, request)
+const identity = async (request, img) => {
+    let myImage = {
+        image_ktp : img.image_ktp[0].path,
+        image_sim : img.image_sim[0].path,
+        your_name : request.your_name
+    }
 
-    // const dataImage = await prismaClient.identity.create({
-    //     data: myImage,
-    //     select: {
-    //         id: true,
-    //         your_name: true,
-    //         image_ktp: true,
-    //         image_sim: true
-    //     }
-    // })
+    const dataImage = await prismaClient.identity.create({
+        data: myImage,
+        select: {
+            id: true,
+            your_name: true,
+            image_ktp: true,
+            image_sim: true
+        }
+    })
 
-    // return dataImage
+    return dataImage
 }
 
 export {
-    identityService
+    identity
 }

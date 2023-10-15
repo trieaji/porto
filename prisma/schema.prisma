@@ -7,13 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model education {
-  id            Int      @id @default(autoincrement())
-  major         String   @db.VarChar(100)
-  school        String   @db.VarChar(100)
-  date_graduate DateTime @db.Date
-}
-
 model my_tech_stack {
   id                  Int                  @id @default(autoincrement())
   name_tech           String               @db.VarChar(100)
@@ -45,10 +38,10 @@ model projects {
 }
 
 model identity {
-  id        Int    @id @default(autoincrement())
-  your_name String @db.VarChar(100)
-  image_ktp String @db.VarChar(255)
-  image_sim String @db.VarChar(255)
+  id        Int     @id @default(autoincrement())
+  your_name String? @db.VarChar(100)
+  image_ktp String  @db.VarChar(255)
+  image_sim String  @db.VarChar(255)
 }
 
 model sample {
@@ -63,7 +56,7 @@ model work_experience {
   skill           String                       @db.VarChar(100)
   workplace       String                       @db.VarChar(100)
   type_of_work    work_experience_type_of_work
-  date_experience DateTime                     @db.Date
+  date_experience DateTime                     @default(now()) @db.Timestamp(0)
 }
 
 model my_tech_stack_image {
@@ -87,6 +80,13 @@ model projects_image {
   projects_id   Int      @unique(map: "projects_image")
   image_project String   @db.VarChar(255)
   projects      projects @relation(fields: [projects_id], references: [id], onUpdate: Restrict, map: "projects_image_id")
+}
+
+model education {
+  id            Int      @id @default(autoincrement())
+  major         String   @db.VarChar(100)
+  school        String   @db.VarChar(100)
+  date_graduate DateTime @default(now()) @db.Timestamp(0)
 }
 
 enum work_experience_type_of_work {

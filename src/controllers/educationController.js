@@ -1,4 +1,4 @@
-import { dbCreateEducation } from "../services/educationService.js";
+import { dbCreateEducation, updateEducation } from "../services/educationService.js";
 
 const createEdu = async (req,res,next) => {
     try {
@@ -11,6 +11,23 @@ const createEdu = async (req,res,next) => {
     }
 }
 
+const updateEdu = async (req,res,next) => {
+    try {
+        // console.log('=== req ===')
+        // console.log(req)
+        let prm = req.params.id
+        let request = req.body
+        request.id = prm
+        const result = await updateEducation(request)
+        res.status(200).json({
+            data: result
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export {
-    createEdu
+    createEdu,
+    updateEdu
 }

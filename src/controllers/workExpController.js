@@ -1,4 +1,4 @@
-import { workExpService } from "../services/workExpService.js";
+import { workExpService, updateWorkExp } from "../services/workExpService.js";
 
 const createWorkExp = async (req,res,next) => {
     try {
@@ -15,6 +15,23 @@ const createWorkExp = async (req,res,next) => {
     }
 }
 
+const updateDbWorkExp = async (req,res,next) => {
+    try {
+        // console.log('=== req luur ===')
+        // console.log(req)  
+        let prm = req.params.id
+        let request = req.body
+        request.id = prm
+        const result = await updateWorkExp(request)
+        res.status(200).json({
+            data: result
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export {
-    createWorkExp
+    createWorkExp,
+    updateDbWorkExp
 }

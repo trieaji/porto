@@ -1,8 +1,8 @@
 import express from "express"
 import { uploadFile } from "../middleware/uploadFiles.js";
 import { uploadOneFile } from "../middleware/uploadOneFile.js";
-import { createImage } from "../controllers/uploadController.js";
-import { createdbImage } from "../controllers/identityController.js";
+import { uploadImage } from "../controllers/uploadController.js";
+import { createIdentity } from "../controllers/identityController.js";
 import { createProfile } from "../controllers/profileController.js";
 
 import multer from "multer";
@@ -16,9 +16,9 @@ const cpUpload =  upload.fields([{ name: 'image_ktp', maxCount: 1 },{ name: 'ima
 const oneUpload = upload.single('image')
 // const testUpload = uploadFile
 
-uploadRouter.post('/api/upload', cpUpload, createImage) // masukkan uploadFile di sini
-
-uploadRouter.post('/api/identity', cpUpload,createdbImage)
+//multiple upload
+uploadRouter.post('/api/upload', cpUpload, uploadImage) // untuk upload image saja
+uploadRouter.post('/api/identity', cpUpload,createIdentity) // gk hanya untuk upload image saja
 
 //profiles
 uploadRouter.post('/api/profiles', oneUpload, createProfile)
