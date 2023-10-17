@@ -1,8 +1,8 @@
 import express from "express"
 import { uploadFile } from "../middleware/uploadFiles.js";
 import { uploadOneFile } from "../middleware/uploadOneFile.js";
-import { uploadImage } from "../controllers/uploadController.js";
-import { createIdentity } from "../controllers/identityController.js";
+import { uploadImage, updateImage } from "../controllers/uploadController.js";
+import { createIdentity, updateIdentity } from "../controllers/identityController.js";
 import { createProfile } from "../controllers/profileController.js";
 
 import multer from "multer";
@@ -19,6 +19,8 @@ const oneUpload = upload.single('image')
 //multiple upload
 uploadRouter.post('/api/upload', cpUpload, uploadImage) // untuk upload image saja
 uploadRouter.post('/api/identity', cpUpload,createIdentity) // gk hanya untuk upload image saja
+uploadRouter.patch('/api/upload/update/:id', cpUpload, updateImage)
+uploadRouter.patch('/api/identity/update/:id', cpUpload, updateIdentity)
 
 //profiles
 uploadRouter.post('/api/profiles', oneUpload, createProfile)
