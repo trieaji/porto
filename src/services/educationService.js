@@ -37,15 +37,11 @@ const dbCreateEducation = async (request) => {
 
 const updateEducation = async (request) => {
     const myEducation = validatedesu(updateEduValidation, request)
-    console.log('=== myEducation ===')
-    console.log(myEducation)
     const totalDatainEdu = await prismaClient.education.count({
         where: {
             id: myEducation.id
         }
     })
-    console.log('=== totalDatainEdu ===')
-    console.log(totalDatainEdu)
 
     if(totalDatainEdu !== 1) {
         throw new ResponseError(404, "data education is not found")
